@@ -51,7 +51,7 @@ export default function LogementBody() {
       <div className="gallery">
         {selectedLocation.pictures && selectedLocation.pictures.length > 1 && (
           <>
-            <button className="arrow-c left-arrow" onClick={handlePrev}>{"<"}</button>
+            <img src='./src/assets/Arrow_gallery.png' className="arrow-c left-arrow" onClick={handlePrev} />
            
               <img
                 className="gallery-img"
@@ -63,7 +63,7 @@ export default function LogementBody() {
                 {currentIndex + 1}/{selectedLocation.pictures.length}
               </div>
            
-            <button className="arrow-c right-arrow" onClick={handleNext}>{">"}</button>
+            <img src='./src/assets/Arrow_gallery.png' className="arrow-c right-arrow" onClick={handleNext}/>
           </>
         )}
 
