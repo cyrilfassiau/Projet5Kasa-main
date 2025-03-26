@@ -624,7 +624,8 @@ align-items: end;
 
 .tag {
   display: flex;
-  width: 115px;
+  width: 100%;
+  max-width: 115px;
  
   background-color: #FF6060;
   border-radius: 10px;
@@ -868,6 +869,58 @@ line-height: 143%;
  }
   .propos-menu p {
     font-size: 13px;
+  }
+
+  .logement-body {
+    width: 335px;
+  }
+
+  .gallery {
+    height: 255px;
+  }
+
+  .logement-grp {
+    flex-direction: column;
+    
+    
+  }
+
+  .logement-info {
+    align-items: start;
+    flex-direction: row-reverse;
+  }
+
+  .tag {
+    width: 84px;
+    font-size: 10px;
+  }
+
+  .stars {
+    width: 98px;
+    padding: 1px;
+    
+  }
+
+  .author-card {
+    width: 135.5px;
+    height: 33px;
+  }
+  .author {
+    font-size: 12px;
+    width: 80px;
+  }
+
+  .author-img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .fa-star {
+    font-size: 10px;
+  }
+
+  .fiche-content {
+    flex-direction: column;
   }
 
   footer {
