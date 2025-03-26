@@ -124,7 +124,7 @@ export default function LogementBody() {
             />
           </div>
           {isDescOpen && (
-            <div className="menu-deroulant open">
+            <div className="menu-deroulant-loc open">
               <div className="fiche-texts">{selectedLocation.description}</div>
             </div>
           )}
@@ -140,7 +140,7 @@ export default function LogementBody() {
             />
           </div>
           {isEquipOpen && (
-            <div className="menu-deroulant open">
+            <div className="menu-deroulant-loc open">
               <ul className="equipments-list">
                 {selectedLocation.equipments?.map((item, index) => (
                   <li key={index} className="equipment-item">{item}</li>
