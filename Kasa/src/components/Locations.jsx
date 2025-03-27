@@ -5,19 +5,15 @@ export default function Locations(item) {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-      // Charger le fichier JSON à partir du dossier public
+  
       fetch('/db.json')
         .then((response) => response.json())
         .then((data) => {
-          // Vérifier les données récupérées dans la console
-          console.log(data); // Vérification dans la console
           setData(data);
         })
         .catch((error) => console.error('Error loading JSON:', error));
-    }, []); // [] pour que l'effet se déclenche une seule fois au chargement
-  
-
-    // Afficher les titres pour chaque appartement
+    }, []); 
+    
     return (
         <div className="location-1">
         {data.length > 0 ? (

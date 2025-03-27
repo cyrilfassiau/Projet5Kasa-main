@@ -1,13 +1,13 @@
 import { useState } from "react";
 
 export default function AboutContent() {
-    const [openMenus, setOpenMenus] = useState({}); // Stocke l'état de chaque menu
+    const [openMenus, setOpenMenus] = useState({}); 
 
     function toggleMenu(index) {
         setOpenMenus(function(prevState) {
             return {
                 ...prevState,
-                [index]: !prevState[index] // Inverse l'état du menu cliqué
+                [index]: !prevState[index] 
             };
         });
     }

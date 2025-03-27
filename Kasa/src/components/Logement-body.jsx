@@ -6,7 +6,6 @@ export default function LogementBody() {
   const [isDescOpen, setIsDescOpen] = useState(false);
   const [isEquipOpen, setIsEquipOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [transition, setTransition] = useState(false);
 
   const location = useLocation();
 
@@ -22,20 +21,7 @@ export default function LogementBody() {
       .catch((error) => console.error('Erreur lors du chargement du JSON:', error));
   }, []);
 
-  // Fonction pour gérer les changements d'images
-  const handleNext = () => {
-    setTransition(true);
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % selectedLocation.pictures.length);
-  };
 
-  const handlePrev = () => {
-    setTransition(true);
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? selectedLocation.pictures.length - 1 : prevIndex - 1
-    );
-  };
-
-  // Gestion des menus déroulants
   const toggleMenu = (menu) => {
     if (menu === "desc") {
       setIsDescOpen(!isDescOpen);
@@ -45,36 +31,45 @@ export default function LogementBody() {
   };
 
 
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % selectedLocation.pictures.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? selectedLocation.pictures.length - 1 : prevIndex - 1
+    );
+  };
 
   return (
     <div className='logement-body'>
-      <div className="gallery">
+       <div className="gallery">
         {selectedLocation.pictures && selectedLocation.pictures.length > 1 && (
           <>
-            <img src='./src/assets/Arrow_gallery.png' className="arrow-c left-arrow" onClick={handlePrev} />
-           
+            <img src='./src/assets/arrow-glr.png' className="arrow-c left-arrow" onClick={handlePrev} /> 
+            
               <img
                 className="gallery-img"
                 src={selectedLocation.pictures[currentIndex]}
                 alt={`Image ${currentIndex + 1}`}
               />
-              {/* Numérotation des images */}
+             
               <div className="image-number">
                 {currentIndex + 1}/{selectedLocation.pictures.length}
               </div>
-           
-            <img src='./src/assets/Arrow_gallery.png' className="arrow-c right-arrow" onClick={handleNext}/>
+            
+            <img src='./src/assets/arrow-glr.png' className="arrow-c right-arrow" onClick={handleNext} /> 
           </>
         )}
 
         {selectedLocation.pictures && selectedLocation.pictures.length === 1 && (
-          <div className="image-container">
+        
             <img
               className="gallery-img"
               src={selectedLocation.pictures[0]}
               alt={`Image unique`}
             />
-          </div>
+        
         )}
       </div>
 
@@ -114,7 +109,7 @@ export default function LogementBody() {
       </div>
 
       <div className="fiche-content">
-        <div className='fiche-desc'>
+      <div className='fiche-desc'>
           <div className="fiche-menu" onClick={() => toggleMenu("desc")}>
             <p>Description</p>
             <img
@@ -123,11 +118,9 @@ export default function LogementBody() {
               alt="toggle"
             />
           </div>
-          {isDescOpen && (
-            <div className="menu-deroulant-loc open">
-              <div className="fiche-texts">{selectedLocation.description}</div>
-            </div>
-          )}
+          <div className={`menu-deroulant ${isDescOpen ? "open" : ""}`}>
+            <div className="fiche-texts">{selectedLocation.description}</div>
+          </div>
         </div>
 
         <div className='fiche-equip'>
@@ -139,15 +132,13 @@ export default function LogementBody() {
               alt="toggle"
             />
           </div>
-          {isEquipOpen && (
-            <div className="menu-deroulant-loc open">
-              <ul className="equipments-list">
-                {selectedLocation.equipments?.map((item, index) => (
-                  <li key={index} className="equipment-item">{item}</li>
-                ))}
-              </ul>
-            </div>
-          )}
+          <div className={`menu-deroulant ${isEquipOpen ? "open" : ""}`}>
+            <ul className="equipments-list">
+              {selectedLocation.equipments?.map((item, index) => (
+                <li key={index} className="equipment-item">{item}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
