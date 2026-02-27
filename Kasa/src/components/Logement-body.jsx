@@ -1,85 +1,119 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from "react-router";
+import React, { useState, useEffect } from "react";
+import { useParams, Navigate } from "react-router";
 
 export default function LogementBody() {
-  const [selectedLocation, setData] = useState([]);
+  const { id } = useParams();
+
+  const [selectedLocation, setSelectedLocation] = useState(null);
   const [isDescOpen, setIsDescOpen] = useState(false);
   const [isEquipOpen, setIsEquipOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const location = useLocation();
+ 
 
   useEffect(() => {
-    fetch('/db.json')
+    fetch("/db.json")
       .then((response) => response.json())
       .then((data) => {
-        const selectedLocation = data.find(
-          (dataSelected) => dataSelected.id === location.state.appartementId
-        );
-        setData(selectedLocation);
+        const logement = data.find((item) => item.id === id);
+        setSelectedLocation(logement || false);
+        setCurrentIndex(0);
       })
-      .catch((error) => console.error('Erreur lors du chargement du JSON:', error));
-  }, []);
+      .catch(() => setSelectedLocation(false));
+  }, [id]);
 
+ 
+
+  
+  if (selectedLocation === null) {
+    return <div>Chargement...</div>;
+  }
+
+  
+  if (selectedLocation === false) {
+    return <Navigate to="/error" replace />;
+  }
+
+ 
 
   const toggleMenu = (menu) => {
-    if (menu === "desc") {
-      setIsDescOpen(!isDescOpen);
-    } else if (menu === "equip") {
-      setIsEquipOpen(!isEquipOpen);
-    }
+    if (menu === "desc") setIsDescOpen(!isDescOpen);
+    if (menu === "equip") setIsEquipOpen(!isEquipOpen);
   };
-
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % selectedLocation.pictures.length);
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? selectedLocation.pictures.length - 1 : prevIndex - 1
+    setCurrentIndex(
+      (prev) => (prev + 1) % selectedLocation.pictures.length
     );
   };
 
+  const handlePrev = () => {
+    setCurrentIndex((prev) =>
+      prev === 0
+        ? selectedLocation.pictures.length - 1
+        : prev - 1
+    );
+  };
+
+ 
+
   return (
-    <div className='logement-body'>
-       <div className="gallery">
-        {selectedLocation.pictures && selectedLocation.pictures.length > 1 && (
+    <div className="logement-body">
+      {/* ===== Galerie ===== */}
+
+      <div className="gallery">
+        {selectedLocation.pictures.length > 1 && (
           <>
-            <img src='./src/assets/arrow-glr.png' className="arrow-c left-arrow" onClick={handlePrev} /> 
-            
-              <img
-                className="gallery-img"
-                src={selectedLocation.pictures[currentIndex]}
-                alt={`Image ${currentIndex + 1}`}
-              />
-             
-              <div className="image-number">
-                {currentIndex + 1}/{selectedLocation.pictures.length}
-              </div>
-            
-            <img src='./src/assets/arrow-glr.png' className="arrow-c right-arrow" onClick={handleNext} /> 
+            <img
+              src="/src/assets/arrow-glr.png"
+              className="arrow-c left-arrow"
+              onClick={handlePrev}
+              alt="précédent"
+            />
+
+            <img
+              className="gallery-img"
+              src={selectedLocation.pictures[currentIndex]}
+              alt={`Image ${currentIndex + 1}`}
+            />
+
+            <div className="image-number">
+              {currentIndex + 1}/{selectedLocation.pictures.length}
+            </div>
+
+            <img
+              src="/src/assets/arrow-glr.png"
+              className="arrow-c right-arrow"
+              onClick={handleNext}
+              alt="suivant"
+            />
           </>
         )}
 
-        {selectedLocation.pictures && selectedLocation.pictures.length === 1 && (
-        
-            <img
-              className="gallery-img"
-              src={selectedLocation.pictures[0]}
-              alt={`Image unique`}
-            />
-        
+        {selectedLocation.pictures.length === 1 && (
+          <img
+            className="gallery-img"
+            src={selectedLocation.pictures[0]}
+            alt="Image unique"
+          />
         )}
       </div>
 
-      <div className='logement-grp'>
-        <div className='logement-text'>
-          <div className='logement-situation'>
-            <div className='logement-title'>{selectedLocation.title}</div>
-            <div className='city'>{selectedLocation.location}</div>
-            <div className='tags'>
-              {selectedLocation.tags?.map((tag, index) => (
+      {/* ===== Infos logement ===== */}
+
+      <div className="logement-grp">
+        <div className="logement-text">
+          <div className="logement-situation">
+            <div className="logement-title">
+              {selectedLocation.title}
+            </div>
+
+            <div className="city">
+              {selectedLocation.location}
+            </div>
+
+            <div className="tags">
+              {selectedLocation.tags.map((tag, index) => (
                 <div key={index} className="tag">
                   {tag}
                 </div>
@@ -88,55 +122,91 @@ export default function LogementBody() {
           </div>
         </div>
 
-        <div className='logement-info'>
-          <div className='author-card'>
-            <div className='author'>{selectedLocation.host?.name || "Nom inconnu"}</div>
+        <div className="logement-info">
+          <div className="author-card">
+            <div className="author">
+              {selectedLocation.host.name}
+            </div>
+
             <img
-              src={selectedLocation.host?.picture || "default.jpg"}
-              className='author-img'
+              src={selectedLocation.host.picture}
+              className="author-img"
               alt="Hôte"
             />
           </div>
-          <div className='stars'>
+
+          <div className="stars">
             {[...Array(5)].map((_, index) => (
               <i
                 key={index}
-                className={`fa-solid fa-star ${index < selectedLocation.rating ? "rated" : ""}`}
+                className={`fa-solid fa-star ${
+                  index < selectedLocation.rating
+                    ? "rated"
+                    : ""
+                }`}
               ></i>
             ))}
           </div>
         </div>
       </div>
 
+      {/* ===== Description & Equipements ===== */}
+
       <div className="fiche-content">
-      <div className='fiche-desc'>
-          <div className="fiche-menu" onClick={() => toggleMenu("desc")}>
+        {/* Description */}
+        <div className="fiche-desc">
+          <div
+            className="fiche-menu"
+            onClick={() => toggleMenu("desc")}
+          >
             <p>Description</p>
             <img
-              src="./src/assets/arrow.png"
-              className={`arrow ${isDescOpen ? "rotate" : ""}`}
+              src="/src/assets/arrow.png"
+              className={`arrow ${
+                isDescOpen ? "rotate" : ""
+              }`}
               alt="toggle"
             />
           </div>
-          <div className={`menu-deroulant ${isDescOpen ? "open" : ""}`}>
-            <div className="fiche-texts">{selectedLocation.description}</div>
+
+          <div
+            className={`menu-deroulant ${
+              isDescOpen ? "open" : ""
+            }`}
+          >
+            <div className="fiche-texts">
+              {selectedLocation.description}
+            </div>
           </div>
         </div>
 
-        <div className='fiche-equip'>
-          <div className="fiche-menu" onClick={() => toggleMenu("equip")}>
+        {/* Equipements */}
+        <div className="fiche-equip">
+          <div
+            className="fiche-menu"
+            onClick={() => toggleMenu("equip")}
+          >
             <p>Équipements</p>
             <img
-              src="./src/assets/arrow.png"
-              className={`arrow ${isEquipOpen ? "rotate" : ""}`}
+              src="/src/assets/arrow.png"
+              className={`arrow ${
+                isEquipOpen ? "rotate" : ""
+              }`}
               alt="toggle"
             />
           </div>
-          <div className={`menu-deroulant ${isEquipOpen ? "open" : ""}`}>
+
+          <div
+            className={`menu-deroulant ${
+              isEquipOpen ? "open" : ""
+            }`}
+          >
             <ul className="equipments-list">
-              {selectedLocation.equipments?.map((item, index) => (
-                <li key={index} className="equipment-item">{item}</li>
-              ))}
+              {selectedLocation.equipments.map(
+                (item, index) => (
+                  <li key={index}>{item}</li>
+                )
+              )}
             </ul>
           </div>
         </div>

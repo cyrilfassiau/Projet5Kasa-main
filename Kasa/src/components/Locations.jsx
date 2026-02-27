@@ -18,7 +18,7 @@ export default function Locations(item) {
         <div className="location-1">
         {data.length > 0 ? (
           data.map((item) => (
-            <Link to="/logement" state={{appartementId : item.id}}>
+            <Link to={`/logement/${item.id}`} state={{appartementId : item.id}}>
             <div key={item.id} id={item.id} className="loc">
               <div className="gradient"></div>
               <img className="img-loc" src={item.cover} alt={item.title} />

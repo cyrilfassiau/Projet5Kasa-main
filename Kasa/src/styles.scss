@@ -69,19 +69,22 @@ body {
   }
   
   .img-box {
-    content: url(./assets/bg.png);
-    object-fit: cover;
-    z-index: 1;
-  
-    /* Image au-dessus du fond */
+    
+  background-image: url("./assets/bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+ 
   }
   
   .img-box-about {
-    content: url(./assets/bg_about.png);
-    object-fit: cover;
-    z-index: 1;
+    background-image: url(./assets/bg_about.png);
+    
+    background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   
-    /* Image au-dessus du fond */
+ 
   }
   
   .box-bg {
@@ -332,7 +335,7 @@ body {
 }
 
 .error-404 {
-  font-size: 18vw;
+  font-size: 288px;
   font-weight: 700;
   color: #FF6060;
   text-align: center;

@@ -8,28 +8,14 @@ import Error from './Error.jsx'
 import Logement from './Logement.jsx'
 
 const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Index />,
-  },
-  {
-    path: '/apropos',
-    element: <Propos />
-  },
-  {
-    path: '/*',
-    element: <Error />
-  },
-  {
-    path: '/logement',
-    element: <Logement />
-  },
-  
-]
-)
+  { path: "/", element: <Index /> },
+  { path: "/apropos", element: <Propos /> },
+  { path: "/logement/:id", element: <Logement /> },
+  { path: "*", element: <Error /> },
+]);
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>,
-)
+  </StrictMode>
+);

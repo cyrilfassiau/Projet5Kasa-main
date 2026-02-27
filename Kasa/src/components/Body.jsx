@@ -7,7 +7,7 @@ export default function Body() {
       
         <section>
         <div className='box-top'>
-        <div className="img-box"></div>
+        <img class="img-box" src="./assets/bg.png" />
         <div className="box-bg"></div>
         <p className="banner-text">Chez vous, partout et ailleurs</p>
         </div>

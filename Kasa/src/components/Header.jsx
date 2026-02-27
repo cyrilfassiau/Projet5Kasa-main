@@ -6,7 +6,7 @@ export default function Header() {
       
         <header>
           <div className='logo'>
-            <img src="./src/assets/LOGO.png "/>
+            <img src="/src/assets/LOGO.png "/>
             </div>
           <nav className='nav-items'>
           <NavLink

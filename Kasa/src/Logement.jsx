@@ -1,6 +1,7 @@
 import './styles.css'
 import Header from './components/Header'
 import LogementBody from './components/Logement-body'
+import Footer from './components/Footer'
 
 export default function Logement() {
 
@@ -9,7 +10,7 @@ export default function Logement() {
     <main>
       <Header />
       <LogementBody />
-
+    <Footer />
  
     </main>
     
