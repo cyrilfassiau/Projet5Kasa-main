@@ -7,12 +7,15 @@ export default function Logement() {
 
 
   return (
+    <>
     <main>
       <Header />
       <LogementBody />
-    <Footer />
+    
  
     </main>
+    <Footer />
+    </>
     
   )
 }

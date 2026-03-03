@@ -1,15 +1,29 @@
 @charset "UTF-8";
+html, body, #root {
+  height: 100%;
+}
+
 body {
   width: 100%;
   max-width: 1440px;
   margin: auto;
-  padding-top: 45px;
   font-family: "Montserrat", sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 main {
   width: 100%;
   max-width: 1440px;
+  flex: 1;
+  padding-top: 45px;
 }
 
 header {
@@ -75,7 +89,7 @@ header {
 }
 
 .img-box-about {
-  background-image: url(./assets/bg_about.png);
+  background-image: url("./assets/bg_about.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -172,8 +186,7 @@ footer {
   background-color: #000000;
   width: 100%;
   max-width: 1440px;
-  height: 209px;
-  margin-top: 40px;
+  height: 170px;
   display: flex;
   justify-content: center;
   align-items: center;

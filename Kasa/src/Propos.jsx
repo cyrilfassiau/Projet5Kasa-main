@@ -7,11 +7,14 @@ export default function Propos() {
 
 
   return (
+    <>
     <main>
       <Header />
       <AboutBody />
-      <Footer />
+      
     </main>
+<Footer />
+    </>
     
   )
 }
