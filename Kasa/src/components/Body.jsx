@@ -5,7 +5,7 @@ export default function Body() {
 
     return (
       
-        <section>
+        <section className="bodySection">
         <div className='box-top'>
         <img className="img-box" src="./assets/bg.png" />
         <div className="box-bg"></div>

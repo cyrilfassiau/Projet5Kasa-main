@@ -125,7 +125,6 @@ header {
   background-color: #f6f6f6;
   border-radius: 25px;
   display: flex;
-  justify-content: center;
   margin: auto;
 }
 
@@ -633,6 +632,12 @@ li {
     padding-top: 45px;
     font-family: "Montserrat", sans-serif;
   }
+  .bodySection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
   header {
     width: 335px;
     height: 46.88px;
@@ -709,6 +714,7 @@ li {
   }
   .logement-body {
     width: 335px;
+    margin-bottom: 30px;
   }
   .city,
   .author {
