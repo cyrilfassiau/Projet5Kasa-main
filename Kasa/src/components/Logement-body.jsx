@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Navigate } from "react-router";
+import Collapse from "./Collapse";
 
 export default function LogementBody() {
   const { id } = useParams();
 
   const [selectedLocation, setSelectedLocation] = useState(null);
-  const [isDescOpen, setIsDescOpen] = useState(false);
-  const [isEquipOpen, setIsEquipOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-
- 
 
   useEffect(() => {
     fetch("/db.json")
@@ -22,45 +19,27 @@ export default function LogementBody() {
       .catch(() => setSelectedLocation(false));
   }, [id]);
 
- 
-
-  
   if (selectedLocation === null) {
     return <div>Chargement...</div>;
   }
 
-  
   if (selectedLocation === false) {
     return <Navigate to="/error" replace />;
   }
 
- 
-
-  const toggleMenu = (menu) => {
-    if (menu === "desc") setIsDescOpen(!isDescOpen);
-    if (menu === "equip") setIsEquipOpen(!isEquipOpen);
-  };
-
   const handleNext = () => {
-    setCurrentIndex(
-      (prev) => (prev + 1) % selectedLocation.pictures.length
-    );
+    setCurrentIndex((prev) => (prev + 1) % selectedLocation.pictures.length);
   };
 
   const handlePrev = () => {
     setCurrentIndex((prev) =>
-      prev === 0
-        ? selectedLocation.pictures.length - 1
-        : prev - 1
+      prev === 0 ? selectedLocation.pictures.length - 1 : prev - 1
     );
   };
-
- 
 
   return (
     <div className="logement-body">
       {/* ===== Galerie ===== */}
-
       <div className="gallery">
         {selectedLocation.pictures.length > 1 && (
           <>
@@ -70,17 +49,14 @@ export default function LogementBody() {
               onClick={handlePrev}
               alt="précédent"
             />
-
             <img
               className="gallery-img"
               src={selectedLocation.pictures[currentIndex]}
               alt={`Image ${currentIndex + 1}`}
             />
-
             <div className="image-number">
               {currentIndex + 1}/{selectedLocation.pictures.length}
             </div>
-
             <img
               src="/src/assets/arrow-glr.png"
               className="arrow-c right-arrow"
@@ -89,7 +65,6 @@ export default function LogementBody() {
             />
           </>
         )}
-
         {selectedLocation.pictures.length === 1 && (
           <img
             className="gallery-img"
@@ -100,18 +75,11 @@ export default function LogementBody() {
       </div>
 
       {/* ===== Infos logement ===== */}
-
       <div className="logement-grp">
         <div className="logement-text">
           <div className="logement-situation">
-            <div className="logement-title">
-              {selectedLocation.title}
-            </div>
-
-            <div className="city">
-              {selectedLocation.location}
-            </div>
-
+            <div className="logement-title">{selectedLocation.title}</div>
+            <div className="city">{selectedLocation.location}</div>
             <div className="tags">
               {selectedLocation.tags.map((tag, index) => (
                 <div key={index} className="tag">
@@ -124,25 +92,19 @@ export default function LogementBody() {
 
         <div className="logement-info">
           <div className="author-card">
-            <div className="author">
-              {selectedLocation.host.name}
-            </div>
-
+            <div className="author">{selectedLocation.host.name}</div>
             <img
               src={selectedLocation.host.picture}
               className="author-img"
               alt="Hôte"
             />
           </div>
-
           <div className="stars">
             {[...Array(5)].map((_, index) => (
               <i
                 key={index}
                 className={`fa-solid fa-star ${
-                  index < selectedLocation.rating
-                    ? "rated"
-                    : ""
+                  index < selectedLocation.rating ? "rated" : ""
                 }`}
               ></i>
             ))}
@@ -151,64 +113,21 @@ export default function LogementBody() {
       </div>
 
       {/* ===== Description & Equipements ===== */}
-
       <div className="fiche-content">
-        {/* Description */}
         <div className="fiche-desc">
-          <div
-            className="fiche-menu"
-            onClick={() => toggleMenu("desc")}
-          >
-            <p>Description</p>
-            <img
-              src="/src/assets/arrow.png"
-              className={`arrow ${
-                isDescOpen ? "rotate" : ""
-              }`}
-              alt="toggle"
-            />
-          </div>
-
-          <div
-            className={`menu-deroulant ${
-              isDescOpen ? "open" : ""
-            }`}
-          >
-            <div className="fiche-texts">
-              {selectedLocation.description}
-            </div>
-          </div>
+          <Collapse title="Description">
+            <div className="fiche-texts">{selectedLocation.description}</div>
+          </Collapse>
         </div>
 
-        {/* Equipements */}
         <div className="fiche-equip">
-          <div
-            className="fiche-menu"
-            onClick={() => toggleMenu("equip")}
-          >
-            <p>Équipements</p>
-            <img
-              src="/src/assets/arrow.png"
-              className={`arrow ${
-                isEquipOpen ? "rotate" : ""
-              }`}
-              alt="toggle"
-            />
-          </div>
-
-          <div
-            className={`menu-deroulant ${
-              isEquipOpen ? "open" : ""
-            }`}
-          >
+          <Collapse title="Équipements">
             <ul className="equipments-list">
-              {selectedLocation.equipments.map(
-                (item, index) => (
-                  <li key={index}>{item}</li>
-                )
-              )}
+              {selectedLocation.equipments.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
             </ul>
-          </div>
+          </Collapse>
         </div>
       </div>
     </div>

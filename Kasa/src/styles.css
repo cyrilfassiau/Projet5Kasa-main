@@ -125,6 +125,7 @@ header {
   background-color: #f6f6f6;
   border-radius: 25px;
   display: flex;
+  justify-content: center;
   margin: auto;
 }
 
@@ -665,6 +666,7 @@ li {
   .locations-grid {
     width: 335px;
     background-color: white;
+    display: block;
   }
   .loc {
     width: 335px;
@@ -725,6 +727,9 @@ li {
     width: 335px;
     height: 255px;
     border-radius: 10px;
+  }
+  .image-number {
+    display: none;
   }
   .author-img {
     width: 48px;
