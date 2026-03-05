@@ -211,7 +211,7 @@ body {
     width: 100%;
     max-width: 1440px;
     height: 170px;
-    
+    flex-shrink: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -662,6 +662,8 @@ li {
   header {
     width: 100%;
     max-width: 824px;
+    justify-content: center;
+    align-items: center;
   }
   .nav-items {
  
@@ -710,11 +712,18 @@ li {
   max-width: 1024px;
 }
 
+.logo > img {
+  width: 150px;
+}
+
 }
 
 
 @media (max-width: 375px) {
 
+  main {
+    padding-top: 0px;
+  }
   body {
     width: 375px;
     margin: auto;
@@ -737,6 +746,7 @@ li {
     height: 17px;
     gap: 26px;
     font-size: 12px;
+    text-transform: uppercase;
   }
 
   .box-top {
@@ -850,11 +860,19 @@ li {
     padding: 8px 15px;
   }
 
+  .fiche-menu > p {
+font-size: 13px;
+  }
+
   .arrow-c {
     width: 12px;
     height: 20px;
   }
   
+  .fiche-texts,
+  .equipments-list{
+    font-size: 13px;
+  }
 
   .fiche-content{
     flex-direction: column;
