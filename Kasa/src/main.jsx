@@ -1,11 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles.css'
-import Index from './Index.jsx'
+import Index from './pages/Index.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router'
-import Propos from './Propos.jsx'
-import Error from './Error.jsx'
-import Logement from './Logement.jsx'
+import Propos from './pages/Propos.jsx'
+import Error from './pages/Error.jsx'
+import Logement from './pages/Logement.jsx'
 
 const router = createBrowserRouter([
   { path: "/", element: <Index /> },
